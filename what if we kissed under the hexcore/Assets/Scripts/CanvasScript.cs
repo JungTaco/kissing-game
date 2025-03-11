@@ -10,41 +10,41 @@ using UnityEngine.UI;
 public class CanvasScript : MonoBehaviour
 {
 	[SerializeField]
-	private SpriteRenderer JayvikIdleRenderer;
+	private SpriteRenderer jayvikIdleRenderer;
 	[SerializeField]
-	private SpriteRenderer JayvikKissRenderer;
+	private SpriteRenderer jayvikKissRenderer;
 	[SerializeField]
-	private SpriteRenderer HexcoreCalm;
+	private SpriteRenderer hexcoreCalm;
 	[SerializeField]
-	private SpriteRenderer HexcoreAggitated;
+	private SpriteRenderer hexcoreAggitated;
 	[SerializeField]
-	private SpriteRenderer HeimerdingerFront;
+	private SpriteRenderer heimerdingerFront;
 	[SerializeField]
-	private SpriteRenderer HeimerdingerBack;
+	private SpriteRenderer heimerdingerBack;
 	[SerializeField]
-	private SpriteRenderer HeimerdingerAttention;
+	private SpriteRenderer heimerdingerAttention;
 	[SerializeField]
-	private SpriteRenderer HeimerdingerHandsDown;
+	private SpriteRenderer heimerdingerHandsDown;
 	[SerializeField]
-	private GameObject Win;
+	private GameObject win;
 	[SerializeField]
-	private GameObject Lose;
+	private GameObject lose;
 	[SerializeField]
-	private GameObject Win_game;
+	private GameObject win_game;
 	[SerializeField]
-	private GameObject Menu;
+	private GameObject menu;
 	[SerializeField]
-	private GameObject Settings;
+	private GameObject settings;
 	[SerializeField]
-	private GameObject Instructions;
+	private GameObject instructions;
 	[SerializeField]
-	private TextMeshProUGUI Level_text;
+	private TextMeshProUGUI level_text;
 	[SerializeField]
-	private AudioSource HeimerginderAudio;
+	private AudioSource heimerginderAudio;
 	[SerializeField]
-	private AudioSource KissingAudio;
+	private AudioSource kissingAudio;
 	[SerializeField]
-	private AudioSource HexcoreAudio;
+	private AudioSource hexcoreAudio;
 
 	private float maxPoints = 100f;
 	private float currentPoints;
@@ -53,29 +53,30 @@ public class CanvasScript : MonoBehaviour
 	private float targetTimeTurned;
 	private float targetTimeHandsDown;
 	private float[] targetTimeTalkingArray;
-	private float[] targetTimeTurnedArray;
+	private float[] targetTimeTurnedAwayArray;
 	private int level = 0;
 	private bool kissing = false;
-	private bool turned = false;
+	private bool turnedAway = false;
 	private LevelText level_text_script;
 
 	void Start()
 	{
+		//sets timers for each of the 3 levels
 		targetTimeTalkingArray = new float[3];
 		targetTimeTalkingArray[0] = UnityEngine.Random.Range(3f, 4f);
 		targetTimeTalkingArray[1] = UnityEngine.Random.Range(3f, 3.5f);
 		targetTimeTalkingArray[2] = UnityEngine.Random.Range(2f, 3f);
 		targetTimeTalking = targetTimeTalkingArray[level];
 
-		targetTimeTurnedArray = new float[3];
-		targetTimeTurnedArray[0] = UnityEngine.Random.Range(3f, 4f);
-		targetTimeTurnedArray[1] = UnityEngine.Random.Range(2.5f, 3f);
-		targetTimeTurnedArray[2] = UnityEngine.Random.Range(2f, 2.5f);
-		targetTimeTurned = targetTimeTurnedArray[level];
+		targetTimeTurnedAwayArray = new float[3];
+		targetTimeTurnedAwayArray[0] = UnityEngine.Random.Range(3f, 4f);
+		targetTimeTurnedAwayArray[1] = UnityEngine.Random.Range(2.5f, 3f);
+		targetTimeTurnedAwayArray[2] = UnityEngine.Random.Range(2f, 2.5f);
+		targetTimeTurned = targetTimeTurnedAwayArray[level];
 		targetTimeHandsDown = 0.3f;
-		currentPoints = 0.0f;
 
-		level_text_script = Level_text.GetComponent<LevelText>();
+		currentPoints = 0.0f;
+		level_text_script = level_text.GetComponent<LevelText>();
 		level_text_script.Show();
 
 		if (PlayerPrefs.HasKey("volume"))
@@ -86,7 +87,7 @@ public class CanvasScript : MonoBehaviour
 
 	void FixedUpdate()
     {	
-		if (!Win.activeInHierarchy && !Lose.activeInHierarchy && !Menu.activeInHierarchy && !Win_game.activeInHierarchy)
+		if (!win.activeInHierarchy && !lose.activeInHierarchy && !menu.activeInHierarchy && !win_game.activeInHierarchy)
 		{
 			if (Input.GetMouseButton(0))
 			{
@@ -102,7 +103,7 @@ public class CanvasScript : MonoBehaviour
 			targetTimeTalking -= Time.deltaTime;
 			if (targetTimeTalking <= 0.0f)
 			{
-				if (!turned)
+				if (!turnedAway)
 				{
 					TalkingTimerEnded();
 				}
@@ -114,7 +115,7 @@ public class CanvasScript : MonoBehaviour
 
 	private void Update()
 	{
-		if (currentPoints >= maxPoints && !Win.activeInHierarchy)
+		if (currentPoints >= maxPoints && !win.activeInHierarchy)
 		{
 			if (level < 2)
 				WinLevel();
@@ -122,22 +123,22 @@ public class CanvasScript : MonoBehaviour
 				WinGame();
 		}
 
-		if (kissing && !turned && !Lose.activeInHierarchy)
+		if (kissing && !turnedAway && !lose.activeInHierarchy)
 		{
 			LoseGame();
 		}
 
 		if (Input.GetKeyUp(KeyCode.Escape) || Input.GetMouseButtonUp(1))
 		{
-			Menu.SetActive(!Menu.activeInHierarchy);
-			UIHandler.instance.ToggleUIVisibility(!Menu.activeInHierarchy);
+			menu.SetActive(!menu.activeInHierarchy);
+			UIHandler.instance.ToggleUIVisibility(!menu.activeInHierarchy);
 		}
 	}
 
 	public void Continue()
 	{
-		Win.SetActive(false);
-		HeimerginderAudio.Play();
+		win.SetActive(false);
+		heimerginderAudio.Play();
 		UIHandler.instance.ToggleUIVisibility(true);
 		level_text_script.SetText("Level " + (level + 1));
 		level_text_script.Show();
@@ -145,7 +146,7 @@ public class CanvasScript : MonoBehaviour
 
 	public void Restart()
 	{
-		Lose.SetActive(false);
+		lose.SetActive(false);
 		ToggleWinGameVisibility(false);
 		UIHandler.instance.ToggleUIVisibility(true);
 		level = 0;
@@ -156,7 +157,7 @@ public class CanvasScript : MonoBehaviour
 
 	public void ToggleSettingsVisibility(bool toggle)
 	{
-		Settings.SetActive(toggle);
+		settings.SetActive(toggle);
 		if (toggle == true)
 			StopAllSounds();
 		else
@@ -165,7 +166,7 @@ public class CanvasScript : MonoBehaviour
 
 	public void ToggleInstructionsVisibility(bool toggle)
 	{
-		Instructions.SetActive(toggle);
+		instructions.SetActive(toggle);
 		if (toggle == true)
 			StopAllSounds();
 		else
@@ -174,7 +175,7 @@ public class CanvasScript : MonoBehaviour
 
 	public void ToggleWinGameVisibility(bool toggle)
 	{
-		Win_game.SetActive(toggle);
+		win_game.SetActive(toggle);
 		if (toggle == true)
 			StopAllSounds();
 		else
@@ -183,13 +184,13 @@ public class CanvasScript : MonoBehaviour
 
 	void TalkingTimerEnded()
 	{
-		turned = true;
-		HeimerginderAudio.Stop();
-		HexcoreAudio.Play();
-		HeimerdingerFront.enabled = false;
-		HeimerdingerAttention.enabled = true;
-		HexcoreCalm.enabled = false;
-		HexcoreAggitated.enabled = true;
+		turnedAway = true;
+		heimerginderAudio.Stop();
+		hexcoreAudio.Play();
+		heimerdingerFront.enabled = false;
+		heimerdingerAttention.enabled = true;
+		hexcoreCalm.enabled = false;
+		hexcoreAggitated.enabled = true;
 	}
 
 	void AttentionTimerStarted()
@@ -203,8 +204,8 @@ public class CanvasScript : MonoBehaviour
 
 	void AttentionTimerEnded()
 	{
-		HeimerdingerAttention.enabled = false;
-		HeimerdingerBack.enabled = true;
+		heimerdingerAttention.enabled = false;
+		heimerdingerBack.enabled = true;
 	}
 
 	void TurnedTimerStarted()
@@ -218,8 +219,8 @@ public class CanvasScript : MonoBehaviour
 
 	void TurnedTimerEnded()
 	{
-		HeimerdingerBack.enabled = false;
-		HeimerdingerHandsDown.enabled = true;
+		heimerdingerBack.enabled = false;
+		heimerdingerHandsDown.enabled = true;
 		HandsDownTimerStarted();
 	}
 
@@ -228,13 +229,13 @@ public class CanvasScript : MonoBehaviour
 		targetTimeHandsDown -= Time.deltaTime;
 		if (targetTimeHandsDown <= 0.0f)
 		{
-			turned = false;
-			HeimerdingerHandsDown.enabled = false;
-			HeimerdingerFront.enabled = true;
-			HexcoreAggitated.enabled = false;
-			HexcoreCalm.enabled = true;
-			HeimerginderAudio.Play();
-			HexcoreAudio.Stop();
+			turnedAway = false;
+			heimerdingerHandsDown.enabled = false;
+			heimerdingerFront.enabled = true;
+			hexcoreAggitated.enabled = false;
+			hexcoreCalm.enabled = true;
+			heimerginderAudio.Play();
+			hexcoreAudio.Stop();
 			ResetTimers();
 		}
 	}
@@ -242,28 +243,28 @@ public class CanvasScript : MonoBehaviour
 	void ResetTimers()
 	{
 		targetTimeTalking = targetTimeTalkingArray[level];
-		targetTimeTurned = targetTimeTurnedArray[level];
+		targetTimeTurned = targetTimeTurnedAwayArray[level];
 		targetTimeAttention = 0.5f;
 		targetTimeHandsDown = 0.3f;
 	}
 
 	void ResetSprites()
 	{
-		HeimerdingerBack.enabled = false;
-		HeimerdingerHandsDown.enabled = false;
-		HeimerdingerFront.enabled = true;
-		HexcoreAggitated.enabled = false;
-		HexcoreCalm.enabled = true;
+		heimerdingerBack.enabled = false;
+		heimerdingerHandsDown.enabled = false;
+		heimerdingerFront.enabled = true;
+		hexcoreAggitated.enabled = false;
+		hexcoreCalm.enabled = true;
 	}
 
 	void ResetSounds()
 	{
-		if (turned)
-			HexcoreAudio.Play();
+		if (turnedAway)
+			hexcoreAudio.Play();
 		else
 		{
-			HexcoreAudio.Stop();
-			HeimerginderAudio.Play();
+			hexcoreAudio.Stop();
+			heimerginderAudio.Play();
 		}
 	}
 
@@ -274,29 +275,29 @@ public class CanvasScript : MonoBehaviour
 		ResetTimers();
 		ResetSprites();
 		kissing = false;
-		turned = false;
+		turnedAway = false;
 		ResetSounds();
 	}
 
 	void StartKissing()
 	{
 		kissing = true;
-		KissingAudio.Play();
-		JayvikIdleRenderer.enabled = false;
-		JayvikKissRenderer.enabled = true;
+		kissingAudio.Play();
+		jayvikIdleRenderer.enabled = false;
+		jayvikKissRenderer.enabled = true;
 	}
 
 	void EndKissing()
 	{
-		KissingAudio.Stop();
+		kissingAudio.Stop();
 		kissing = false;
-		JayvikIdleRenderer.enabled = true;
-		JayvikKissRenderer.enabled = false;
+		jayvikIdleRenderer.enabled = true;
+		jayvikKissRenderer.enabled = false;
 	}
 
 	void WinLevel()
 	{
-		Win.SetActive(true);
+		win.SetActive(true);
 		if (level < 2)
 		{
 			level++;
@@ -314,7 +315,7 @@ public class CanvasScript : MonoBehaviour
 
 	void LoseGame()
 	{
-		Lose.SetActive(true);
+		lose.SetActive(true);
 		level = 0;
 		Reset();
 		StopAllSounds();
@@ -332,8 +333,8 @@ public class CanvasScript : MonoBehaviour
 
 	void StopAllSounds()
 	{
-		HeimerginderAudio.Stop();
-		KissingAudio.Stop();
-		HexcoreAudio.Stop();
+		heimerginderAudio.Stop();
+		kissingAudio.Stop();
+		hexcoreAudio.Stop();
 	}
 }

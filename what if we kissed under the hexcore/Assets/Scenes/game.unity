@@ -6163,24 +6163,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a96d85efc2f438c4ca2b6287f15d38f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JayvikIdleRenderer: {fileID: 273962878}
-  JayvikKissRenderer: {fileID: 860487778}
-  HexcoreCalm: {fileID: 1918124691}
-  HexcoreAggitated: {fileID: 2033708495}
-  HeimerdingerFront: {fileID: 196559455}
-  HeimerdingerBack: {fileID: 433037108}
-  HeimerdingerAttention: {fileID: 1965711995}
-  HeimerdingerHandsDown: {fileID: 1568184403}
-  Win: {fileID: 179467927}
-  Lose: {fileID: 477110540}
-  Win_game: {fileID: 92870016}
-  Menu: {fileID: 1121300097}
-  Settings: {fileID: 1448406539}
-  Instructions: {fileID: 1666301352}
-  Level_text: {fileID: 978136033}
-  HeimerginderAudio: {fileID: 1038636318}
-  KissingAudio: {fileID: 1784460316}
-  HexcoreAudio: {fileID: 1480682865}
+  jayvikIdleRenderer: {fileID: 273962878}
+  jayvikKissRenderer: {fileID: 860487778}
+  hexcoreCalm: {fileID: 1918124691}
+  hexcoreAggitated: {fileID: 2033708495}
+  heimerdingerFront: {fileID: 196559455}
+  heimerdingerBack: {fileID: 433037108}
+  heimerdingerAttention: {fileID: 1965711995}
+  heimerdingerHandsDown: {fileID: 1568184403}
+  win: {fileID: 179467927}
+  lose: {fileID: 477110540}
+  win_game: {fileID: 92870016}
+  menu: {fileID: 1121300097}
+  settings: {fileID: 1448406539}
+  instructions: {fileID: 1666301352}
+  level_text: {fileID: 978136033}
+  heimerginderAudio: {fileID: 1038636318}
+  kissingAudio: {fileID: 1784460316}
+  hexcoreAudio: {fileID: 1480682865}
 --- !u!1 &1784460315
 GameObject:
   m_ObjectHideFlags: 0
