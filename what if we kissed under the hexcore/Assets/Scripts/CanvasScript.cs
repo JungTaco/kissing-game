@@ -9,24 +9,42 @@ using UnityEngine.UI;
 
 public class CanvasScript : MonoBehaviour
 {
-    public SpriteRenderer JayvikIdleRenderer;
-	public SpriteRenderer JayvikKissRenderer;
-	public SpriteRenderer HexcoreCalm;
-	public SpriteRenderer HexcoreAggitated;
-	public SpriteRenderer HeimerdingerFront;
-	public SpriteRenderer HeimerdingerBack;
-	public SpriteRenderer HeimerdingerAttention;
-	public SpriteRenderer HeimerdingerHandsDown;
-	public GameObject Win;
-	public GameObject Lose;
-	public GameObject Win_game;
-	public GameObject Menu;
-	public GameObject Settings;
-	public GameObject Instructions;
-	public TextMeshProUGUI Level_text;
-	public AudioSource HeimerginderAudio;
-	public AudioSource KissingAudio;
-	public AudioSource HexcoreAudio;
+	[SerializeField]
+	private SpriteRenderer JayvikIdleRenderer;
+	[SerializeField]
+	private SpriteRenderer JayvikKissRenderer;
+	[SerializeField]
+	private SpriteRenderer HexcoreCalm;
+	[SerializeField]
+	private SpriteRenderer HexcoreAggitated;
+	[SerializeField]
+	private SpriteRenderer HeimerdingerFront;
+	[SerializeField]
+	private SpriteRenderer HeimerdingerBack;
+	[SerializeField]
+	private SpriteRenderer HeimerdingerAttention;
+	[SerializeField]
+	private SpriteRenderer HeimerdingerHandsDown;
+	[SerializeField]
+	private GameObject Win;
+	[SerializeField]
+	private GameObject Lose;
+	[SerializeField]
+	private GameObject Win_game;
+	[SerializeField]
+	private GameObject Menu;
+	[SerializeField]
+	private GameObject Settings;
+	[SerializeField]
+	private GameObject Instructions;
+	[SerializeField]
+	private TextMeshProUGUI Level_text;
+	[SerializeField]
+	private AudioSource HeimerginderAudio;
+	[SerializeField]
+	private AudioSource KissingAudio;
+	[SerializeField]
+	private AudioSource HexcoreAudio;
 
 	private float maxPoints = 100f;
 	private float currentPoints;
@@ -68,19 +86,6 @@ public class CanvasScript : MonoBehaviour
 
 	void FixedUpdate()
     {	
-		if (currentPoints >= maxPoints && !Win.activeInHierarchy)
-		{
-			if (level < 2)
-				WinLevel();
-			else
-				WinGame();
-		}
-
-		if(kissing && !turned && !Lose.activeInHierarchy)
-		{
-			LoseGame();
-		}
-
 		if (!Win.activeInHierarchy && !Lose.activeInHierarchy && !Menu.activeInHierarchy && !Win_game.activeInHierarchy)
 		{
 			if (Input.GetMouseButton(0))
@@ -109,6 +114,19 @@ public class CanvasScript : MonoBehaviour
 
 	private void Update()
 	{
+		if (currentPoints >= maxPoints && !Win.activeInHierarchy)
+		{
+			if (level < 2)
+				WinLevel();
+			else
+				WinGame();
+		}
+
+		if (kissing && !turned && !Lose.activeInHierarchy)
+		{
+			LoseGame();
+		}
+
 		if (Input.GetKeyUp(KeyCode.Escape) || Input.GetMouseButtonUp(1))
 		{
 			Menu.SetActive(!Menu.activeInHierarchy);
