@@ -1,21 +1,21 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UIHandler : MonoBehaviour
+public class ProgressBarControl : MonoBehaviour
 {
-	public static UIHandler instance { get; private set; }
+	public static ProgressBarControl Instance { get; private set; }
 
 	private VisualElement bar;
 	private VisualElement barBackground;
 
 	private void Awake()
 	{
-		instance = this;
+		Instance = this;
 	}
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
-    {
+	{
 		UIDocument uiDocument = GetComponent<UIDocument>();
 		bar = uiDocument.rootVisualElement.Q<VisualElement>("Bar");
 		barBackground = uiDocument.rootVisualElement.Q<VisualElement>("BarBackground");

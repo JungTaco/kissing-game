@@ -10,7 +10,7 @@ public class LevelText : MonoBehaviour
 	private bool fadeOutRunning = false;
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
-	void Start()
+	void Awake()
     {
         text = GetComponent<TMP_Text>();
         text.text = "Level 1";
