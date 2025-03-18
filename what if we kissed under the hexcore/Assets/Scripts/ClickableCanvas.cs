@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class CanvasScript : MonoBehaviour
+public class ClickableCanvas : MonoBehaviour
 {
 	[HideInInspector]
 	public bool IsBeingClicked = false;

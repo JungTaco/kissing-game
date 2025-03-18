@@ -7,7 +7,7 @@ public class GameControl : MonoBehaviour
 	public static GameControl Instance { get; private set; }
 
 	[SerializeField]
-	private CanvasScript canvas;
+	private ClickableCanvas canvas;
 	private SpriteControl spriteControl;
 	private SFXControl sfxControl;
 	private MenuControl menuControl;
