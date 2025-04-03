@@ -7,32 +7,41 @@ public class LevelText : MonoBehaviour
 {
 	private TMP_Text text;
 	private float targetTimeLevelText;
-	private bool fadeOutRunning = false;
+	private bool fadingIn = false;
+	private bool fadingOut = false;
 
-	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Awake()
     {
         text = GetComponent<TMP_Text>();
         text.text = "Level 1";
 		targetTimeLevelText = 1f;
+		text.color = new Color(text.color.r, text.color.g, text.color.b, 0);
 	}
 
     // Update is called once per frame
     void Update()
     {
-		if (!fadeOutRunning && text.color.a >= 1)
+		if (fadingIn)
 		{
 			targetTimeLevelText -= Time.deltaTime;
 			if (targetTimeLevelText <= 0)
 			{
-				StartCoroutine(FadeOut(text));
+				FadeIn();
+			}
+		}
+		else if (fadingOut)
+		{
+			targetTimeLevelText -= Time.deltaTime;
+			if (targetTimeLevelText <= 0)
+			{
+				FadeOut();
 			}
 		}
 	}
 
     public void Show()
     {
-		StartCoroutine(FadeIn(text));
+		fadingIn = true;
 		ResetTimer();
 	}
 
@@ -41,27 +50,30 @@ public class LevelText : MonoBehaviour
 		text.text = level_text;
 	}
 
-	private IEnumerator FadeIn(TMP_Text text)
+	private void FadeIn()
 	{
-		text.color = new Color(text.color.r, text.color.g, text.color.b, 0);
-		while (text.color.a <= 1.0f)
+		if (text.color.a < 1.0f)
 		{
 			text.color = new Color(text.color.r, text.color.g, text.color.b, text.color.a + Time.deltaTime);
-			yield return null;
+		}
+		else
+		{
+			fadingIn = false;
+			ResetTimer();
+			fadingOut = true;
 		}
 	}
 
-	private IEnumerator FadeOut(TMP_Text text)
+	private void FadeOut()
 	{
-		fadeOutRunning = true;
-		text.color = new Color(text.color.r, text.color.g, text.color.b, 1);
-		while (text.color.a >= 0.0f)
+		if (text.color.a > 0)
 		{
-			
 			text.color = new Color(text.color.r, text.color.g, text.color.b, text.color.a - Time.deltaTime);
-			yield return null;
 		}
-		fadeOutRunning = false;
+		else
+		{
+			fadingOut = false;
+		}
 	}
 
 	private void ResetTimer()
