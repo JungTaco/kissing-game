@@ -5,7 +5,6 @@ using UnityEngine.UIElements;
 public class GameControl : MonoBehaviour
 {
 	public static GameControl Instance { get; private set; }
-
 	[SerializeField]
 	private ClickableCanvas canvas;
 	private SpriteControl spriteControl;
